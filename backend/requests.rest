@@ -1,0 +1,15 @@
+GET http://localhost:3000/
+
+###
+
+GET http://localhost:3000/posts
+
+###
+
+POST http://localhost:3000/posts/new-thread/
+Content-Type: application/json
+
+{
+    "title":"Title sent",
+    "body":"body is here, more and more words"
+}
