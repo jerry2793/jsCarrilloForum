@@ -1,19 +1,27 @@
-# jsCarrilloForum
+# jsCarrilloForum - Introduction
 The Carrillo discussion forum promoting academic collaboration with honesty. It is extending the idea of Stack Overflow, but applying it to a web app which students can post discussion questions and connect with each other better! 
-## MERN Full Stack here: 
-#### Frontend: React app
+## Goal: 
+To provide a platform for students and teachers to connect better when asking questions about academic, grade policies, 
+To provide an all-in-one platform to enhance the learning experience especially in distance learning, make asking questions easier, and make teachers not to answer repeating questions - check the related threads! (inspiration from stack overflow). 
+#
+# Project Layout
+## MERN Full Stack "project stractch paper" here: 
+### Frontend: React app
 ##### Components List: 
 ###### Screens (big components)
 1. Authentication and mainpage (hello world, welcome, here login or signup)\
-2. create a new section view from teacher\
-3. 
+2. homepage that contains all the user related settings\
+3. create a new section view from teacher\
+4. add new thread in a given section\
+5. thread details view - to view question, comments and answers from a thread\
+6. manage the active threads one user had posted and give notifications when answers arrive (like the homepage when you go to google classroom), teacher has a special manage their sections widget too\
 ###### Widgets (small perfectionalized components)
-1. form input for <textarea />, <input text /> - refer to google form's style\
-2. 
+1. form input for <textarea />, <input text />, and radio select - refer to google form's style\
+2. thread / section widget where json list can be passed in (thread, section manage view is the same style / component)\
 
 
-#### Backend: Express module
-#####    Here is the backend project layout: \
+### Backend: Express module
+#####    Here is the backend project layout: 
 index.js is the main file which extends the routers\
 ###### Folders: 
 routers : for containing express routers \
