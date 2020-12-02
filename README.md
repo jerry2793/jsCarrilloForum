@@ -3,6 +3,8 @@ The Carrillo discussion forum promoting academic collaboration with honesty. It 
 ## Goal: 
 To provide a platform for students and teachers to connect better when asking questions about academic, grade policies, 
 To provide an all-in-one platform to enhance the learning experience especially in distance learning, make asking questions easier, and make teachers not to answer repeating questions - check the related threads! (inspiration from stack overflow). 
+// ## General UI
+
 #
 # Project Layout
 ## MERN Full Stack "project stractch paper" here: 
