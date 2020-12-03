@@ -17,14 +17,14 @@ router.get('auth/', (req,res) => {
 router.get('sections/', (req, res) => {
     Sections.find()
         .then(secs => res.send(secs))
-        .catch(err => res.status(400).json(`Error: ${err}`)
+        .catch(err => res.status(400).json(`Error: ${err}`))
 });
 
 // display all available threads for a given section id and permitted (auth) user
 router.get('threads/:id', (req, res) => {
     Threads.find({_id: req.params.id})
         .then(threads => res.send(threads))
-        .catch(err => res.status(400).json(`Error: ${err}`)
+        .catch(err => res.status(400).json(`Error: ${err}`))
 });
 
 module.exports = router;
