@@ -38,3 +38,5 @@ routers : for containing express routers
 3. thread-details/:id : to get the comments, title, 
 /posts/... : to post data\
 
+# My Contacts
+If there are any questions, feel free to email at this address: ruiyang_j2310@srcschools.org 
