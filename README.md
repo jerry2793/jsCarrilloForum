@@ -3,7 +3,6 @@ The Carrillo discussion forum promoting academic collaboration with honesty. It 
 ## Goal: 
 To provide a platform for students and teachers to connect better when asking questions about academic, grade policies, 
 To provide an all-in-one platform to enhance the learning experience especially in distance learning, make asking questions easier, and make teachers not to answer repeating questions - check the related threads! (inspiration from stack overflow). 
-// ## General UI
 
 #
 # Project Layout
@@ -24,9 +23,9 @@ To provide an all-in-one platform to enhance the learning experience especially 
 
 ### Backend: Express module
 #####    Here is the backend project layout: 
-index.js is the main file which extends the routers\
+index.js is the main file which extends the routers
 ###### Folders: 
-routers : for containing express routers\
+routers : for containing express routers
 1. user authentication required routers that needs to extend auth middlewares
 2. routers to fetch - some auth required (fetch.js)
 3. to post - all auth required (posts.js)
@@ -34,4 +33,8 @@ routers : for containing express routers\
 #####    URL Formats
 / : the url that returns the entire react app to the user\
 /api/... : to fetch data from mongodb\
+1. sections/:id : to grab the avaible sections a user is enrolled or permitted in (id = user id created by mongodb)
+2. threads/:id : to grab the existing threads given (id of that sections) - returns [title, description, user, numReplies, isSolved]
+3. thread-details/:id : to get the comments, title, 
 /posts/... : to post data\
+
