@@ -1,9 +1,13 @@
 import react, {useState} from 'react';
+import {withRouter} from 'react-router-dom';
 
-export default (props) => {
+import './input.css'
+
+export default withRouter( (props) => {
     return (
-        <div>
+        <div className={"input-wrapper"}>
             <input />
+            <span className={"placeholder"}>{props.label}</span>
         </div>
     )
-}
+} )

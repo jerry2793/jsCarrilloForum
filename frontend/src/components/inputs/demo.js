@@ -13,7 +13,11 @@ import Input from './input';
 
 function HandleDifferentUrlParamsToComponent (props) {
     let {componentName} = useParams();
-    componentName = eval(componentName)
+    const componentNames = {
+        'Input':Input,
+        'TextArea':TextArea
+    }
+    // componentName = componentNames[componentName]
     return (<div>
         <componentName />
     </div>)
@@ -21,23 +25,31 @@ function HandleDifferentUrlParamsToComponent (props) {
 
 function InputDemoRouter(props) {
     let { path, url } = useRouteMatch();
+    console.log(path)
     return (<div>
         <Router>
             <div>
-                
+
+                {/* <p>{path}, {url}</p> */}
                 <ul>
                     <li><Link to={`${url}/Input`}>Input</Link></li>
                     <li><Link to={`${url}/TextArea`}>TextArea</Link></li>
                 </ul>
                 
                 <Switch>
-                    <Route exact_path={`${path}`}><h3>Please Select a Demo Component</h3></Route>
-                    <Route path={`${path}/:componentName`} component={HandleDifferentUrlParamsToComponent} />
+                    <Route exact path={`${path}`}><h3>Please Select a Demo Component</h3></Route>
+                    <Route exact path={`${path}/Input`}>
+                        <Input label={"Label Name"} />
+                    </Route>
+                    <Route exact path={`${path}/TextArea`}>
+                        <TextArea label={"Label Name"} />
+                    </Route>
+                    {/* <Route path={`${path}/:componentName`} component={HandleDifferentUrlParamsToComponent} /> */}
                 </Switch>
 
             </div>
         </Router>
-    </div>)
+        </div>)
 }
 
 export default (props) => {
@@ -46,3 +58,5 @@ export default (props) => {
         <InputDemoRouter homeScreen={this} />
     </div>)
 }
+
+// export default InputDemoRouter;
