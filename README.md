@@ -3,7 +3,15 @@ The Carrillo discussion forum promoting academic collaboration with honesty. It 
 ## Goal: 
 To provide a platform for students and teachers to connect better when asking questions about academic, grade policies, 
 To provide an all-in-one platform to enhance the learning experience especially in distance learning, make asking questions easier, and make teachers not to answer repeating questions - check the related threads! (inspiration from stack overflow). 
-
+#
+# Project Plannings: 
+1. Frontend Components setup with some basic widgets to use here and there. *Checked*
+2. Authentication + style the navbar
+3. Create Sections, or called courses
+4. allow opening threads or topics or individual questions to post in each section
+5. User homepage
+6. Styling, packaging
+7. Deployment and Showcase. 
 #
 # Project Layout
 ## MERN Full Stack "project stractch paper" here: 
