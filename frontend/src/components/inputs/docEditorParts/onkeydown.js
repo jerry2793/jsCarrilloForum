@@ -30,6 +30,15 @@ export default (event, props, setDisplayPreviewKey, editor) => {
 
     switch (event.key) {
     // When "B" is pressed, bold the text in the selection.
+    case 'h': {
+        event.preventDefault()
+        const [hMatch] = Editor.nodes(editor, {
+            match: n => n.type === 'h1'
+        })
+        Transforms.setNodes(editor,
+            { type: hMatch? 'normal':'h1' },
+            { match: n => Editor.isBlock(editor,n) })
+    }
     case 'b': {
         event.preventDefault()
         const [boldMatch] = Editor.nodes(editor, {
