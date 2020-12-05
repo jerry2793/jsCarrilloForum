@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import TextArea from './textarea';
 import Input from './input';
+import DocEditor from './documentEditor'
 
 
 function HandleDifferentUrlParamsToComponent (props) {
@@ -34,6 +35,7 @@ function InputDemoRouter(props) {
                 <ul>
                     <li><Link to={`${url}/Input`}>Input</Link></li>
                     <li><Link to={`${url}/TextArea`}>TextArea</Link></li>
+                    <li><Link to={`${url}/slater`}>DocEditor</Link></li>
                 </ul>
                 
                 <Switch>
@@ -44,6 +46,10 @@ function InputDemoRouter(props) {
                     <Route exact path={`${path}/TextArea`}>
                         <TextArea label={"Label Name"} />
                     </Route>
+                    <Route exact path={`${path}/slater`}>
+                        <DocEditor demo />
+                    </Route>
+
                     {/* <Route path={`${path}/:componentName`} component={HandleDifferentUrlParamsToComponent} /> */}
                 </Switch>
 

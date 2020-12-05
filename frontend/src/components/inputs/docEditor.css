@@ -1,0 +1,17 @@
+/* body {
+}
+
+.inputSlateWrapper, .inputSlateWrapper:hover, .inputSlateWrapper:focus {
+    border: 1px solid black;
+    border-radius: 2%;
+    margin: 0px 10%;
+    padding: 20px;
+    background-color: #dedede;
+    transition: 0.15s ease-out;
+}.inputSlateWrapper:hover {
+    box-shadow: 0 0 5px black;
+
+} .inputSlateWrapper:focus {
+    box-shadow: 0 0 5px black;
+    background-color: white;
+} */
