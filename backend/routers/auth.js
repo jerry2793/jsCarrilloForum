@@ -19,6 +19,7 @@ router.use(express.urlencoded( {extended:true} ) )
 
 // Traditional native auth
 
+// login with the native button
 router.post('/login', (req, res) => {
     // Read username and password from request body
     const { email, password } = req.body;
@@ -38,6 +39,10 @@ router.post('/login', (req, res) => {
     }
 });
 
+
+// user signups for both oauth and traditional auth
+// OAuth: pass in the email and pwd along with the 
+// data from the profile page collected. 
 router.post('/signup', (req,res) => {
     /* JSON format: 
     {
@@ -46,11 +51,40 @@ router.post('/signup', (req,res) => {
         firstName:
         lastName: 
         age: optional
-        isTeacher: optional (true if teacher district domain)
+        // the below field is auth added with oauth
+        isTeacher: optional (true if teacher is district domain)
     }
     */
+
+    const data = req.body
+
+    let newUser = new User({
+        email: data.email,
+        pwd: data.pwd,
+        name: data.name,
+        age: data.age,
+        isTeacher: data.isTeacher,
+    })
+
+    newUser.save( (err, data) => {
+        if (err) {
+            res.status(500).json({err:"Cannot save user to the database"})
+        } else {
+            // Sign the user in
+            // what if the user is already authenticated with Oauth?
+            
+            const token = jwt.sign({_id: data._id}, process.env.JWT_TOKEN, {expiresIn:'7d'});
+            const { _id, name, email } = data;
+
+            res.json({
+                token: token,
+                user: { _id, name, email }
+            })
+        }
+    } )
 })
 
+// the signin with google button route
 router.post('/signupwithgoogle', (req,res) => {
     const tokenId = req.body.tokenId;
     // console.log(tokenId)
