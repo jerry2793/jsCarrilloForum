@@ -56,7 +56,7 @@ router.post('/signupwithgoogle', (req,res) => {
     // console.log(tokenId)
     client.verifyIdToken({idToken:tokenId, audience: clientId}).then(response => {
         const {email_verified, name, email} = response.payload;
-        // console.log(response.payload)
+        console.log(name)
         if (email_verified) {
             User.findOne({email}).exec((err, user) => {
                 if (err) {
@@ -67,8 +67,50 @@ router.post('/signupwithgoogle', (req,res) => {
                 } else {
                     if (user) {
                         // user already exists in the db
+                        const token = jwt.sign({_id: user._id}, process.env.JWT_TOKEN, {expiresIn:'7d'});
+                        const { _id, name, email } = user;
+
+                        res.json({
+                            token: token,
+                            user: { _id, name, email }
+                        })
                     } else {
                         // user does not exist in db, so sign up
+                        // set a default password for a new user
+                        let pwd = process.env.JWT_TOKEN;
+                        // const {firstName, lastName} = name.split()
+
+                        // add isTeacher privellige to teacher organization address in email
+                        let isTeacher;
+                        if (email.split("@")[1] === 'srcs.k12.ca.us') {
+                            isTeacher = true;
+                        } else {
+                            isTeacher = false;
+                        }
+                        let newUser = new User({
+                            email: email, 
+                            password: pwd,
+                            name: name,
+                            isTeacher: isTeacher
+                        })
+
+                        newUser.save( (err, data) => {
+                            if (err) {
+                                res.status(500).json({
+                                    err: "Cannot save the user model, server encountered a wiered error"
+                                })
+                            }
+
+                            // sign a user in
+                            const token = jwt.sign({_id: data._id}, process.env.JWT_TOKEN, {expiresIn:'7d'});
+                            const { _id, name, email } = data;
+
+                            res.json({
+                                token: token,
+                                user: { _id, name, email }
+                            })
+                            
+                        } )
                     }
                 }
             })

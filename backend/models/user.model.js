@@ -21,16 +21,23 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
-    firstName: {
+    name: {
         type: String,
-        required: false,
-        lowercase: true,
+        required: true,
+        default: 'FirstName LastName'
     },
-    lastName: {
-        type: String,
-        required: false,
-        lowercase: true,
-    },
+    // firstName: {
+    //     type: String,
+    //     required: false,
+    //     lowercase: true,
+    //     default: 'First Name'
+    // },
+    // lastName: {
+    //     type: String,
+    //     required: false,
+    //     lowercase: true,
+    //     default: 'Last Name'
+    // },
     age: {
         type: Date,
         required: false,
