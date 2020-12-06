@@ -37,6 +37,7 @@ app.get('/', (req,res) => {
 // routers
 // app.use('/posts',require("./routers/posts.js"))
 // app.use('/api',require("./routers/fetches"))
+app.use('/auth',require('./routers/auth'))
 
 
 

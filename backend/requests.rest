@@ -13,3 +13,12 @@ Content-Type: application/json
     "title":"Title sent",
     "body":"body is here, more and more words"
 }
+
+###
+
+POST http://localhost:5000/auth/signupwithgoogle
+Content-Type: application/json
+
+{
+    "tokenId": "a;hfowheropqhjasdasfkhasdfhas"
+}

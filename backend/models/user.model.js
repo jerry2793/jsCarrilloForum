@@ -4,18 +4,51 @@ const Schema  = mongoose.Schema;
 
 
 const userSchema = new Schema({
-    username: {
+    // username: {
+    //     type: String,
+    //     required: true,
+    //     unique: true,
+    //     trim: true,
+    //     minlength: 5,
+    // },
+    email: {
+        type: String,
+        unique:true,
+        required: true,
+        lowercase: true
+    },
+    password: {
         type: String,
         required: true,
-        unique: true,
-        trim: true,
-        minlength: 5,
     },
-    email: {
-
+    firstName: {
+        type: String,
+        required: false,
+        lowercase: true,
     },
-    name: {},
-    timestamps: true,
+    lastName: {
+        type: String,
+        required: false,
+        lowercase: true,
+    },
+    age: {
+        type: Date,
+        required: false,
+        default: 0
+    },
+    isTeacher: {
+        type: Boolean,
+        required: true,
+        default: false
+    },
+    resetLink: {
+        data: String,
+        default: ''
+    },
+    timestamps: {
+        type: Date,
+        default: Date.now()
+    }
 })
 
 const User = mongoose.model('User',userSchema);
