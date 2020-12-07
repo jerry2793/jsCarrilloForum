@@ -26,18 +26,6 @@ const userSchema = new Schema({
         required: true,
         default: 'FirstName LastName'
     },
-    // firstName: {
-    //     type: String,
-    //     required: false,
-    //     lowercase: true,
-    //     default: 'First Name'
-    // },
-    // lastName: {
-    //     type: String,
-    //     required: false,
-    //     lowercase: true,
-    //     default: 'Last Name'
-    // },
     age: {
         type: Date,
         required: false,

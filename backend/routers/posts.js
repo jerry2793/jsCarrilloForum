@@ -1,6 +1,7 @@
 const express = require("express")
 
 const User = require("../models/user.model")
+const SectionModel = require("../models/sections.model")
 const ThreadModel = require("./../models/threads.model")
 
 const router  = express.Router();
@@ -27,7 +28,11 @@ router.get('/', (req,res) => {
 
 // open up a new section for teacher only
 router.post('/new-section', req, res => {
-    if (req.user.isTeacher)
+    if (req.user.isTeacher) {
+        let newSection = 
+    } else {
+        res.status(403).json({err: "This is not a registered teacher account, Cannot give permission to open a new section"})
+    }
 })
 
 // open up a new discussion thread

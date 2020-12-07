@@ -27,4 +27,8 @@ router.get('threads/:id', (req, res) => {
         .catch(err => res.status(400).json(`Error: ${err}`))
 });
 
+
+// additional plugins here
+router.use('/update',require('./updateFields')) // update specific fields in a model instance
+
 module.exports = router;
