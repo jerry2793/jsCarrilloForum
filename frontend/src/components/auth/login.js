@@ -1,15 +1,23 @@
+import { Redirect } from 'react-router-dom'
 import axios from 'axios';
 import GoogleLogin from 'react-google-login';
 
 const responseSuccessGoogle = (res) => {
-    console.log(`Success: ${res}`, res);
+    console.log(`Information sent: `, res);
     const userData = {
         tokenId: res.tokenId
     }
-    axios.post("/auth/signupwithgoogle", userData, {
+    axios.post("/auth/accounts/signupwithgoogle", userData, {
         headers: {'Content-Type': 'application/json'}
     }).then(res => {
-        console.log('axios posted tokenId: ', res)
+        console.log('Got TokenId from server: ', res)
+        // store the tokenId as session
+        sessionStorage.setItem("token", res.data.token)
+        sessionStorage.setItem("user", res.data.user)
+        // if the user is a first timer, then prompt to a setup profile page
+        if (res.data.isFirstTimer === true) {
+            window.location = '/accounts/profile'
+        }
     }).catch(err => console.log(err))
 }
 

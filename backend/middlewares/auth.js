@@ -1,11 +1,12 @@
-import User from '../models/user.model'
+const User = require('../models/user.model')
 
+const accessTokenSecret = process.env.JWT_TOKEN
 
 const authenticateJWT = (req, res, next) => {
-    const authHeader = req.headers.authorization;
+    const authHeader = req.headers;
 
     if (authHeader) {
-        const token = authHeader.split(' ')[1];
+        const {token} = authHeader;
 
         jwt.verify(token, accessTokenSecret, (err, user) => {
             if (err) {
@@ -22,4 +23,4 @@ const authenticateJWT = (req, res, next) => {
 };
 
 
-export default authenticateJWT;
+module.exports = authenticateJWT;

@@ -12,11 +12,11 @@ const express = require("express")
 const router = express.Router();
 
 
-router.get('/', req,res => {
+router.get('/', (req,res) => {
     res.send('API endpoint to update specific fields in a model instance gien model name and model id, and the field name')
 })
 
-router.post('/:modelName/:id/:fieldName', req,res => {
+router.post('/:modelName/:id/:fieldName', (req,res) => {
     // first query out the model instance
     // then update
     // send status code or result

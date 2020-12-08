@@ -6,22 +6,20 @@ const Threads = require("./../models/threads.model");
 
 const router  = express.Router();
 
+router.get('/', (req,res) => {
+    res.send('Here is where you get fetch data from db')
+})
 
-router.get('auth/', (req,res) => {
- User.find()
-    .then(users => res.json(users))
-    .catch(err => res.status(400).json(`Error: ${err}`))
-});
 
 // display all the sections available for an authenticated user
-router.get('sections/', (req, res) => {
+router.get('/sections', (req, res) => {
     Sections.find()
         .then(secs => res.send(secs))
         .catch(err => res.status(400).json(`Error: ${err}`))
 });
 
 // display all available threads for a given section id and permitted (auth) user
-router.get('threads/:id', (req, res) => {
+router.get('/threads/:id', (req, res) => {
     Threads.find({_id: req.params.id})
         .then(threads => res.send(threads))
         .catch(err => res.status(400).json(`Error: ${err}`))
@@ -30,5 +28,6 @@ router.get('threads/:id', (req, res) => {
 
 // additional plugins here
 router.use('/update',require('./updateFields')) // update specific fields in a model instance
+router.use('/auth',require('./auth/fetch'))
 
 module.exports = router;

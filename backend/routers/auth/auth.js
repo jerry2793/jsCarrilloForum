@@ -1,4 +1,5 @@
 const express = require('express')
+const expressJwt = require('express-jwt')
 const jwt = require('jsonwebtoken');
 
 const {OAuth2Client} = require('google-auth-library')
@@ -6,14 +7,24 @@ const {OAuth2Client} = require('google-auth-library')
 const clientId = '716519267644-madtrjpocfpeea7bqple7gcg2prn0kns.apps.googleusercontent.com'
 const client = new OAuth2Client(clientId)
 
-const User = require("./../models/user.model");
-const Sections = require("./../models/sections.model");
-const Threads = require("./../models/threads.model");
+const User = require("../../models/user.model");
+const Sections = require("../../models/sections.model");
+const Threads = require("../../models/threads.model");
 
 const router = express.Router();
 
+
+// jwt server secret that the client must match (access token)
+const JWT_SECRET = process.env.JWT_TOKEN
+
 router.use(express.json())
 router.use(express.urlencoded( {extended:true} ) )
+// router.use(expressJwt({
+//     secret: JWT_SECRET,
+//     algorithms: ['RS256']
+// }))
+
+
 
 
 
@@ -73,7 +84,7 @@ router.post('/signup', (req,res) => {
             // Sign the user in
             // what if the user is already authenticated with Oauth?
             
-            const token = jwt.sign({_id: data._id}, process.env.JWT_TOKEN, {expiresIn:'7d'});
+            const token = jwt.sign({_id: data._id}, JWT_SECRET, {expiresIn:'7d'});
             const { _id, name, email } = data;
 
             res.json({
@@ -101,17 +112,20 @@ router.post('/signupwithgoogle', (req,res) => {
                 } else {
                     if (user) {
                         // user already exists in the db
-                        const token = jwt.sign({_id: user._id}, process.env.JWT_TOKEN, {expiresIn:'7d'});
+                        console.log('oauth got from existing db')
+                        const token = jwt.sign({_id: user._id}, JWT_SECRET, {expiresIn:'7d'});
                         const { _id, name, email } = user;
 
                         res.json({
                             token: token,
-                            user: { _id, name, email }
+                            user: { _id, name, email },
+                            // isFirstTimer: true
                         })
                     } else {
                         // user does not exist in db, so sign up
                         // set a default password for a new user
-                        let pwd = process.env.JWT_TOKEN;
+                        console.log('registering a new user')
+                        let pwd = JWT_SECRET;
                         // const {firstName, lastName} = name.split()
 
                         // add isTeacher privellige to teacher organization address in email
@@ -136,12 +150,13 @@ router.post('/signupwithgoogle', (req,res) => {
                             }
 
                             // sign a user in
-                            const token = jwt.sign({_id: data._id}, process.env.JWT_TOKEN, {expiresIn:'7d'});
+                            const token = jwt.sign({_id: data._id}, JWT_SECRET, {expiresIn:'7d'});
                             const { _id, name, email } = data;
 
                             res.json({
                                 token: token,
-                                user: { _id, name, email }
+                                user: { _id, name, email },
+                                isFirstTimer: true,
                             })
                             
                         } )
