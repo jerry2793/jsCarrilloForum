@@ -6,8 +6,12 @@ import {
 } from "react-router-dom";
 
 import HomePage from './homepage'
-import Login from './auth/login'
+import AuthRoutes from './auth/routes'
 import InputDemoRouter from './inputs/demo'
+import Messenger from './messenger/routes'
+import Courses from './courses/routes'
+import Threads from './threads/routes'
+import Popular from './popular/routes'
 
 
 import React from 'react';
@@ -24,6 +28,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import HomeIcon from '@material-ui/icons/Home';
+
+import Popover from '@material-ui/core/Popover';
 
 
 import { fade, makeStyles } from '@material-ui/core/styles';
@@ -41,6 +48,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 // import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import { Popper } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
 list: {
@@ -121,7 +129,7 @@ const NavBar = props => {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  const [drawerOpened, toggleDrawer] = useState(false)
+  const [sidebarDrawerOpened, toggleSidebarDrawer] = useState(false)
   const [anchor, setAnchor] = useState()
 
   const handleProfileMenuOpen = (event) => {
@@ -152,8 +160,8 @@ const NavBar = props => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem component={Link} to="/accounts/profile" onClick={handleMenuClose}>Profile</MenuItem>
+      {/* <MenuItem component={Link} to='/accounts/profile' onClick={handleMenuClose}>My Profile</MenuItem> */}
     </Menu>
   );
 
@@ -168,7 +176,7 @@ const NavBar = props => {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
+      <MenuItem component={Link} to={"/messages"}>
         <IconButton aria-label="show 4 new mails" color="inherit">
           <Badge badgeContent={4} color="secondary">
             <MailIcon />
@@ -176,7 +184,7 @@ const NavBar = props => {
         </IconButton>
         <p>Messages</p>
       </MenuItem>
-      <MenuItem>
+      <MenuItem component={Link} to="/notifications">
         <IconButton aria-label="show 11 new notifications" color="inherit">
           <Badge badgeContent={11} color="secondary">
             <NotificationsIcon />
@@ -198,24 +206,40 @@ const NavBar = props => {
     </Menu>
   );
 
+  const formatGetSecondWord = text => {
+    text = text.toLowerCase()
+    if (text.includes(' ')) {
+      return text.replace(' ', '/')
+    } else {
+      return text
+    }
+  }
+
   const MenuItems = (props) => (
     <div
       role="presentation"
-      onClick={e => toggleDrawer(false)}
-      onKeyDown={e => toggleDrawer(false)}
+      onClick={e => toggleSidebarDrawer(false)}
+      onKeyDown={e => toggleSidebarDrawer(false)}
     >
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
+        <ListItem component={Link} to="/" button key="homepage">
+          <ListItemIcon><HomeIcon /></ListItemIcon>
+          <ListItemText primary="Home Page" />
+        </ListItem>
+        <Divider />
+        {['Courses', 'Threads', 'Popular Threads', 'Popular Courses'].map((text, index) => (
+          // <Link to={`/${formatGetSecondWord(text)}`}>
+          <ListItem component={Link} to={`/${formatGetSecondWord(text)}`} button key={text}>
             <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
+          // </Link>
         ))}
       </List>
       <Divider />
       <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
+        {['My Courses', 'My Threads', 'Messenger'].map((text, index) => (
+          <ListItem component={Link} to={`/${formatGetSecondWord(text)}`} button key={text}>
             <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
@@ -224,18 +248,40 @@ const NavBar = props => {
     </div>
   );
 
+  const [toggleSearchResults, setToggleSearchResults] = useState(false)
+  const [searchValue, setSearchValue] = useState(String)
+
+  const SearchResults = props => {
+    return (<Popper
+      id={toggleSearchResults? undefined: 'simple-popper'}
+      open={toggleSearchResults}
+      anchorEl={toggleSearchResults}
+      onClose={e => {setToggleSearchResults(false)}}
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'center',
+      }}
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'center',
+      }}
+    >
+      <Typography className={classes.typography}>The content of the Popover.</Typography>
+    </Popper>)
+  }
+
   return (
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
 
-          <IconButton onClick={() => toggleDrawer(true)}
+          <IconButton onClick={() => toggleSidebarDrawer(true)}
             edge="start"
             className={classes.menuButton}
             color="inherit"
             aria-label="open drawer"
           ><MenuIcon /></IconButton>
-          <Drawer open={drawerOpened} onClose={e => {toggleDrawer(false)}}>
+          <Drawer open={sidebarDrawerOpened} onClose={e => {toggleSidebarDrawer(false)}}>
             <MenuItems />
           </Drawer>
 
@@ -253,8 +299,14 @@ const NavBar = props => {
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
+              onChange={e => {
+                setSearchValue(e.target.value)
+              }}
             />
           </div>
+
+          <SearchResults value={SearchResults} />
+          
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <IconButton aria-label="show 4 new mails" color="inherit">
@@ -313,7 +365,12 @@ export default (props) => {
                 <Switch>
                     <Route exact path="/" component={HomePage} />
                     <Route exact path="/InputsDemo" component={InputDemoRouter} />
-                    <Route exact path="/login" component={Login} />
+                    <Route path="/accounts" component={AuthRoutes} />
+                    <Route path="/messenger" component={Messenger} />
+                    <Route path="/courses" component={Courses} />
+                    <Route path="/threads" component={Threads} />
+                    <Route path="/popular/:type" component={Popular} />
+                    <Route path="/my/:type" component={AuthRoutes} />
                 </Switch>
 
                 </div>

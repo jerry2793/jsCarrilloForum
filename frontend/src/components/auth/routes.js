@@ -14,9 +14,9 @@ import Settings from './setting'
 export default ({match}) => {
     // console.log(match.url)
     return (<div>
-        <Route exact path={match.url + '/login'} component={Login} />
-        <Route exact path={match.url + '/reset-pwd'} component={PasswordReset} />
-        <Route exact path={match.url + '/signup'} component={Signup} />
-        <Route exact path={match.url + '/profile'} component={Settings} />
+        <Route path={match.url + '/login'} component={Login} />
+        <Route path={match.url + '/reset-pwd'} component={PasswordReset} />
+        <Route path={match.url + '/signup'} component={Signup} />
+        <Route path={match.url + '/profile'} component={Settings} />
     </div>)
 }

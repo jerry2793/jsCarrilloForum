@@ -10,7 +10,8 @@ import { useEffect, useRef, useState } from 'react';
 import axios from 'axios'
 import GoogleLogin from 'react-google-login';
 
-import { Alert, Button } from  'react-bootstrap'
+import Button from '@material-ui/core/Button'
+import {WarningAlert} from '../alerts';
 
 import Input from '../inputs/generic'
 
@@ -52,10 +53,9 @@ const responseFailureGoogle = (res) => {
 
 const InvalidMsg = props => {
     return (<>
-        <Alert variant="danger">
-            <Alert.Heading>Oops, the Form is not valid! </Alert.Heading>
-            <p>Please fill out <strong>{props.missingField}</strong>!</p>
-        </Alert>
+        <WarningAlert>
+            Please fill out the <strong>{props.missingField}</strong> field before logging in
+        </WarningAlert>
     </>)
 }
 
@@ -108,7 +108,7 @@ export default props => {
             onChange={handleInputChange}
              />
 
-            <Button variant={"primary"} size={"lg"} block onClick={e => {
+            <Button variant="contained" color="primary" size="large" fullWidth onClick={e => {
                 // submit the form with axios here
                 // check if the email, pwd is being filled out
                 setFormValid(true)
