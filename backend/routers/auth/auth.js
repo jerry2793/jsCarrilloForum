@@ -69,13 +69,16 @@ router.post('/signup', (req,res) => {
 
     const data = req.body
 
-    let newUser = new User({
-        email: data.email,
-        pwd: data.pwd,
-        name: data.name,
-        age: data.age,
-        isTeacher: data.isTeacher,
-    })
+    // let newUser = new User({
+    //     email: data.email,
+    //     pwd: data.pwd,
+    //     name: data.name,
+    //     age: data.age,
+    //     isTeacher: data.isTeacher,
+    // })
+
+    // just put the data directly into the model
+    let newUser = new User(data)
 
     newUser.save( (err, data) => {
         if (err) {
@@ -112,7 +115,7 @@ router.post('/signupwithgoogle', (req,res) => {
                 } else {
                     if (user) {
                         // user already exists in the db
-                        console.log('oauth got from existing db')
+                        // console.log('oauth got from existing db')
                         const token = jwt.sign({_id: user._id}, JWT_SECRET, {expiresIn:'7d'});
                         const { _id, name, email } = user;
 

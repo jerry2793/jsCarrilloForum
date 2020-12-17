@@ -7,6 +7,8 @@ const User = require('../../models/user.model')
 
 const router = express.Router();
 
+router.use(express.json())
+router.use(express.urlencoded( {extended:true} ) )
 // user must be authenticated to be able to get data
 router.use(require('../../middlewares/auth'))
 

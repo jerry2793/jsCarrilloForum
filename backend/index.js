@@ -3,12 +3,14 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 
 const app = express();
+app.use(express.json())
+app.use(express.urlencoded( {extended:true} ) )
 
 require("dotenv").config()
 
 const PORT = process.env.PORT || 5000;
 
-console.log(process.env.CONNECT_URI)
+// console.log(process.env.CONNECT_URI)
 
 // connect to the remote mongodb database
 mongoose.connect(
