@@ -1,5 +1,8 @@
 import axios from 'axios'
-import { Alert, Button } from 'react-bootstrap';
+
+import Button from "../buttons/send";
+import { WarningAlert } from "../alerts";
+
 import React, { useState, useEffect, useCallback } from 'react';
 
 import Input from '../inputs/pwd'
@@ -23,20 +26,21 @@ export default props => {
     return (<div>
         <h1>New Password</h1>
         {/* <p>{msg}</p> */}
-        {msg?<Alert variant={alertType}>{msg}</Alert>:''}
+        {msg?<WarningAlert variant={alertType}>{msg}</WarningAlert>:''}
         <Input onChange={useCallback(e => setPwd(e.target.value))}
         label="New Password" type="password" />
         <Input onChange={useCallback(e => setValidatePwd(e.target.value))}
         label="Retype New Password" type="password" />
-        <Button onClick={() => {
+        <Button onClick={(e, setError) => {
             // console.log('button clicked')
             // console.log(pwd)
             if (pwd === validatePwd) {
+                setError('')
                 const resetPostMsg = {
                     password: pwd,
                     user: localStorage.getItem("userId")
                 }
-                // console.log(resetPostMsg)
+                console.log(resetPostMsg)
                 axios.post('/api/accounts/update-pwd',resetPostMsg)
                     .then(res => {
                         console.log('successful')
@@ -47,8 +51,7 @@ export default props => {
                     })
                     .catch(err => {setMsg("sorry, here is the error code: ", err); setAlertType("danger")})
             } else {
-                setMsg("Passwords does not match")
-                setAlertType('danger')
+                setError("Must have passwords the same")
             }
         }}
         variant='primary' size="lg">Set New Password</Button>

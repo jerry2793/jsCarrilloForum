@@ -4,7 +4,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import KeyboardVoiceIcon from '@material-ui/icons/KeyboardVoice';
-import Icon from '@material-ui/core/Icon';
+
+import Icon from '@material-ui/core/Icon'
+import SendIcon from '@material-ui/icons/Send';
 import SaveIcon from '@material-ui/icons/Save';
 
 const useStyles = makeStyles((theme) => ({
@@ -35,7 +37,7 @@ export default props => {
       marginBottom: '50px'
     }}>
         <Button 
-        onClick={e => handleClick(e)}
+        onClick={(e) => handleClick(e)}
         disabled={disabled}
         disableRipple
         fullWidth
@@ -43,7 +45,7 @@ export default props => {
         variant="contained"
         color="primary"
         className={classes.button}
-        endIcon={<Icon>send</Icon>}
+        endIcon={<SendIcon />}
       >
         {loading? 'Sending': props.children || 'Send'}
       </Button>

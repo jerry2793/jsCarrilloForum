@@ -1,5 +1,5 @@
 export default props => {
     return (<div>
-        <h1>Messenger homepage</h1>
+        <h1>Here is the chatroom</h1>
     </div>)
 }

@@ -31,11 +31,11 @@ const userSchema = new Schema({
         required: false,
         default: 0
     },
-    isTeacher: {
+    isAdmin: {
         type: Boolean,
-        required: true,
         default: false
     },
+
     resetLink: {
         data: String,
         default: ''
